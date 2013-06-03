@@ -1,6 +1,6 @@
 
 /**
- * web framework code
+ * module dependincies
  */
 
 var express = require('express')
@@ -8,6 +8,10 @@ var express = require('express')
   , upload = require('./routes/upload')
   , http = require('http')
   , path = require('path');
+
+/**
+ * configuration
+ */
 
 var app = express();
 
@@ -35,7 +39,7 @@ http.createServer(app).listen(app.get('port'), function(){
 
 
 /**
- * webserver code
+ * Only listen on $ sudo node server.js
  */
 
 var connect = require('connect');
