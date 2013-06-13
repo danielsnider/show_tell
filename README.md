@@ -1,2 +1,10 @@
-show_tell
+Show and Tell
 =========
+
+
+##Requirements:
+    sphinxbase
+    pocketsphinx
+
+##Usage:
+
