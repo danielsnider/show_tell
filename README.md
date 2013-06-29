@@ -4,7 +4,7 @@ Show visuals using your voice!
 
 ![talk](http://www.realfriendforagents.co.uk/wp-content/uploads/fly-solo-with-the-right-tone-of-voice.jpg)
     
-##Documentation: 
+###Tooling Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
 - coffeescript http://coffeescript.org/
 - node.js http://nodejs.org/api/index.html
@@ -17,15 +17,16 @@ Free video education: http://leveluptuts.com/tutorials
 
 ##Requirements:
 #####web application framework
-    node.js
-    connect
+    node.js 
+    connect 
     express
+    npm
+    gem
+    
 #####javascript developement
     coffeescript
-#####design frameworks
-    gem
-    sass
-    compass
+#####design framework
+    compass (which includes sass)
 
 ##Installation:
 ###install the requirements
@@ -47,11 +48,10 @@ Free video education: http://leveluptuts.com/tutorials
     git init
     git pull git@github.com:danielsnider/show_tell.git
     
-~~###install required modules~~ 
-    ~~npm install express~~
-    ~~npm install connect~~
-    ~~gem install compass~~
-
+###install required modules
+    npm install express
+    npm install connect
+    gem install compass
 ##Usage:
 
 
