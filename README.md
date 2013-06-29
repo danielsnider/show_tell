@@ -1,38 +1,43 @@
 Show and Tell
 =========
 
-#Free education:
-    http://leveluptuts.com/tutorials
+
     
     
 #Documentation: 
-Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
-node.js http://nodejs.org/api/index.html
-coffeescript http://coffeescript.org/
-sass http://sass-lang.com/
-compass http://compass-style.org/reference/compass/
+- Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
+- coffeescript http://coffeescript.org/
+- node.js http://nodejs.org/api/index.html
+- sass http://sass-lang.com/
+- compass http://compass-style.org/reference/compass/
 
+Free video education: http://leveluptuts.com/tutorials
 
 ##Requirements:
-#web application framework
+###web application framework
     node.js
     connect
     express
-#javascript developement
-    coffeescript (apt-get install coffeescript)
-#design frameworks
+###javascript developement
+    coffeescript
+###design frameworks
     gem
     sass
     compass
 
 ##Installation:
-#install node
+###install the requirements
     git clone git://github.com/ry/node.git
     cd node
     ./configure; make; make install;
     cd ..
+    apt-get install coffeescript (or 'npm install -g coffee-script')
+    apt-get install rubygems
+    git clone http://github.com/isaacs/npm.git
+    cd npm
+    sudo make install
     
-#install this repo
+###install this repo
     apt-get update
     apt-get install git-core
     mkdir show_tell
@@ -40,15 +45,10 @@ compass http://compass-style.org/reference/compass/
     git init
     git pull git@github.com:danielsnider/show_tell.git
     
-#install modules
-    git clone http://github.com/isaacs/npm.git
-    cd npm
-    sudo make install
-    
-    npm install coffee-script
-    npm install express
-    npm install connect
-    gem install compass
+~~###install required modules~~ 
+    ~~npm install express~~
+    ~~npm install connect~~
+    ~~gem install compass~~
 
 ##Usage:
 
