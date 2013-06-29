@@ -31,6 +31,7 @@ Free video education: http://leveluptuts.com/tutorials
     compass (which includes sass)
 
 ##Installation:
+    su
     # prerequisites
     git clone git://github.com/ry/node.git
     cd node
@@ -38,9 +39,10 @@ Free video education: http://leveluptuts.com/tutorials
     cd ..
     apt-get install coffeescript #(or 'npm install -g coffee-script')
     apt-get install rubygems
+    gem install compass
     git clone http://github.com/isaacs/npm.git
     cd npm
-    sudo make install
+    make; install;
     # show and tell
     apt-get update
     apt-get install git-core
