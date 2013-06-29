@@ -1,10 +1,10 @@
 Show and Tell
 =========
+Show visuals using your voice!
 
-
+![talk](http://www.realfriendforagents.co.uk/wp-content/uploads/fly-solo-with-the-right-tone-of-voice.jpg)
     
-    
-#Documentation: 
+##Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
 - coffeescript http://coffeescript.org/
 - node.js http://nodejs.org/api/index.html
@@ -13,14 +13,16 @@ Show and Tell
 
 Free video education: http://leveluptuts.com/tutorials
 
+
+
 ##Requirements:
-###web application framework
+#####web application framework
     node.js
     connect
     express
-###javascript developement
+#####javascript developement
     coffeescript
-###design frameworks
+#####design frameworks
     gem
     sass
     compass
