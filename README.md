@@ -36,7 +36,7 @@ Free video education: http://leveluptuts.com/tutorials
     cd node
     ./configure; make; make install;
     cd ..
-    apt-get install coffeescript (or 'npm install -g coffee-script')
+    apt-get install coffeescript #(or 'npm install -g coffee-script')
     apt-get install rubygems
     git clone http://github.com/isaacs/npm.git
     cd npm
