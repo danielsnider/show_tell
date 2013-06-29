@@ -1,8 +1,10 @@
 Show and Tell
 =========
-Show visuals using your voice!
+Show visuals using just your voice!
 
 ![talk](http://www.realfriendforagents.co.uk/wp-content/uploads/fly-solo-with-the-right-tone-of-voice.jpg)
+
+har har har
     
 ###Tooling Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
