@@ -8,15 +8,11 @@ har har har
     
 ## Software requirements:
 ##### web application framework
-    node.js 
-    connect 
-    express
-    
+    node.js (with connect and express)
 ##### javascript developement
     coffeescript
 ##### design framework
     compass (which includes sass)
-    
 ##### package managers
     npm
     gem
@@ -29,15 +25,14 @@ har har har
     ./configure; make; make install;
     cd ..
     apt-get update
+    apt-get install git-core
     apt-get install coffeescript #(or 'npm install -g coffee-script')
     apt-get install rubygems
     gem install compass
     # show and tell install 
-    apt-get install git-core
     mkdir show_tell
     cd show_tell
-    git init
-    git pull git@github.com:danielsnider/show_tell.git
+    git clone git@github.com:danielsnider/show_tell.git
 
 ### Tooling Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
