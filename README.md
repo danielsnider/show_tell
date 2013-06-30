@@ -38,6 +38,9 @@ har har har
     # set your username and email so we can identify you
     git config --global user.name "Daniel Snider"
     git config --global user.email "danielsnider12@gmail.com"
+    # set the time correctly
+    date -s "3 JUN 2013 05:58"
+    export TZ=Toronto
     cd show_tell
     touch test.txt
     git status # notice there is an untracked file?
