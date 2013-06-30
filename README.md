@@ -38,7 +38,7 @@ har har har
     # set your username and email so we can identify you
     git config --global user.name "Daniel Snider"
     git config --global user.email "danielsnider12@gmail.com"
-    touch test
+    touch test.txt
     git status # notice there is an untracked file?
     git add test
     git commit
