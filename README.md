@@ -10,7 +10,7 @@ har har har
 ##### web application framework
     node.js (with connect and express)
 ##### javascript developement
-    coffeescript (maybe....)
+    coffeescript (maybe not...)
 ##### design framework
     compass (which includes sass)
 ##### special package managers
