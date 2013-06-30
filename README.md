@@ -19,12 +19,12 @@ har har har
 
 ## Installation:
     su
+    apt-get update
+    apt-get install git-core
     git clone git://github.com/ry/node.git
     cd node
     ./configure; make; make install;
     cd ..
-    apt-get update
-    apt-get install git-core
     apt-get install coffeescript #(or 'npm install -g coffee-script')
     apt-get install rubygems
     gem install compass
