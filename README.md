@@ -47,6 +47,18 @@ har har har
     # type a commit description like "test commit" and then type ":x" and hit enter to save it and close
     git pull git@github.com:danielsnider/show_tell.git
     git push git@github.com:danielsnider/show_tell.git
+    
+## Starting the websurver 
+    $ sudo node server.js
+    
+## Directory structure
+`node_modules` - node.js utils
+
+`public` - stores uploaded files
+
+`routes` - dispatches web resquests to appropriate webpages
+
+`views` - webpages
 
 ### Tooling Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
