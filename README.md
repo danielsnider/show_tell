@@ -38,9 +38,10 @@ har har har
     # set your username and email so we can identify you
     git config --global user.name "Daniel Snider"
     git config --global user.email "danielsnider12@gmail.com"
+    cd show_tell
     touch test.txt
     git status # notice there is an untracked file?
-    git add test
+    git add test.txt
     git commit
     # type a commit description like "test commit" and then type ":x" and hit enter to save it and close
     git push git@github.com:danielsnider/show_tell.git
