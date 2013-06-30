@@ -13,7 +13,7 @@ har har har
     coffeescript
 ##### design framework
     compass (which includes sass)
-##### package managers
+##### special package managers
     npm
     gem
 
