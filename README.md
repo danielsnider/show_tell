@@ -13,7 +13,7 @@ har har har
     coffeescript
 ##### design framework
     compass (which includes sass)
-##### package managers
+##### special package managers
     npm
     gem
 
@@ -33,6 +33,18 @@ har har har
     mkdir show_tell
     cd show_tell
     git clone git@github.com:danielsnider/show_tell.git
+
+## Making your your first commit
+    # set your username and email so we can identify you
+    git config --global user.name "Daniel Snider"
+    git config --global user.email "danielsnider12@gmail.com"
+    cd show_tell
+    touch test.txt
+    git status # notice there is an untracked file?
+    git add test.txt
+    git commit
+    # type a commit description like "test commit" and then type ":x" and hit enter to save it and close
+    git push git@github.com:danielsnider/show_tell.git
 
 ### Tooling Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
