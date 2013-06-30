@@ -39,7 +39,7 @@ har har har
     git config --global user.name "Daniel Snider"
     git config --global user.email "danielsnider12@gmail.com"
     # set the time correctly
-    date -s "3 JUN 2013 05:58"
+    date -s "30 JUN 2013 05:58"
     export TZ=Toronto
     cd show_tell
     touch test.txt
