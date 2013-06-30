@@ -33,8 +33,6 @@ har har har
     git clone git@github.com:danielsnider/show_tell.git
 
 ## Making your your first commit
-    # start by pulling the latest code
-    git pull git@github.com:danielsnider/show_tell.git
     # set your username and email so we can identify you
     git config --global user.name "Daniel Snider"
     git config --global user.email "danielsnider12@gmail.com"
@@ -47,6 +45,7 @@ har har har
     git add test.txt # track this file
     git commit 
     # type a commit description like "test commit" and then type ":x" and hit enter to save it and close
+    git pull git@github.com:danielsnider/show_tell.git
     git push git@github.com:danielsnider/show_tell.git
 
 ### Tooling Documentation: 
