@@ -54,3 +54,6 @@ har har har
 - compass http://compass-style.org/reference/compass/
 
 Free video education: http://leveluptuts.com/tutorials
+
+### Google Document for information sharing:
+https://docs.google.com/document/d/1PsP9Rb0oEkOZE9ePCAP10lA9yCaiuAe6IfyX3sp4pjo/edit?usp=sharing
