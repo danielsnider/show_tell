@@ -19,7 +19,6 @@ har har har
 
 ## Installation:
     su
-    # prerequisites
     git clone git://github.com/ry/node.git
     cd node
     ./configure; make; make install;
@@ -29,7 +28,6 @@ har har har
     apt-get install coffeescript #(or 'npm install -g coffee-script')
     apt-get install rubygems
     gem install compass
-    # show and tell install 
     mkdir show_tell
     cd show_tell
     git clone git@github.com:danielsnider/show_tell.git
