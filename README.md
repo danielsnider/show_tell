@@ -35,7 +35,7 @@ har har har
     git clone git@github.com:danielsnider/show_tell.git
 
 ## Making your your first commit
-    # pull the latest
+    # start by pulling the latest code
     git pull git@github.com:danielsnider/show_tell.git
     # set your username and email so we can identify you
     git config --global user.name "Daniel Snider"
