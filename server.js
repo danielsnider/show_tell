@@ -9,6 +9,10 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+var exec = require('child_process').exec, child;
+var fs = require("fs");
+var path = require("path");
+
 /**
  * configuration
  */
@@ -31,11 +35,23 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+//route http get request to index.ejs page 
 app.get('/', routes.index);
 
-app.post('/file_upload', function(req, res, next) {
+//process uploaded files
+app.post('/', function(req, res, next) {
+    res.render('index', { title: 'Show and Tell' });
+    
     console.log(req.body);
-    console.log(req.files);
+    // console.log(req.files);
+    var keyword = req.body.keyword.replace(/ /g,'-');
+    var file = req.files.file.path;
+
+    command = "mv " + file + " ./public/uploads/" + keyword;
+    child = exec(command, function (error, stdout, stderr) {
+      console.log(command);
+      console.log('stdout: ' + stdout);
+  });
 });
 
 http.createServer(app).listen(app.get('port'), function(){
