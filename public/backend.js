@@ -35,10 +35,14 @@ recognition.lang = "en";
 recognition.onresult = function (event) {
     console.log("event");
     for (var i = event.resultIndex; i < event.results.length; ++i) {
-        // if (event.results[i].isFinal) {
             console.log("final");
-            // insertAtCaret("transcript", event.results[i][0].transcript);
-            $('input#transcript').val(event.results[i][0].transcript);
-        // }
+            $('textarea#transcript').val(event.results[i][0].transcript);
+            checkForKeywordMatch();
     }
 };
+
+
+function checkForKeywordMatch()
+{
+    $('img#visuals').attr('src',"images/happy.jpg");
+}

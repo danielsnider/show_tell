@@ -42,7 +42,7 @@ app.get('/', routes.index);
 app.post('/', function(req, res, next) {
     res.render('index', { title: 'Show and Tell' });
     
-    console.log(req.body);
+    // console.log(req.body);
     // console.log(req.files);
     var keyword = req.body.keyword.replace(/ /g,'-');
     var file = req.files.file.path;
