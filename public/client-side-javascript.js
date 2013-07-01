@@ -35,14 +35,27 @@ recognition.lang = "en";
 recognition.onresult = function (event) {
     console.log("event");
     for (var i = event.resultIndex; i < event.results.length; ++i) {
-            console.log("final");
-            $('textarea#transcript').val(event.results[i][0].transcript);
-            checkForKeywordMatch();
+        console.log("final");
+        $('textarea#transcript').val(event.results[i][0].transcript);
+        checkForKeywordMatch(event.results[i][0].transcript);
     }
 };
 
-
-function checkForKeywordMatch()
+function checkForKeywordMatch(transcript)
 {
-    $('img#visuals').attr('src',"images/happy.jpg");
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {
+  xmlhttp=new XMLHttpRequest();
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","checkForKeywordMatch.js?body="+transcript.replace(/ /g,'-') ,true);
+xmlhttp.send();
 }
+
