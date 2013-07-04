@@ -4,18 +4,13 @@ Show visuals just using your voice!
 
 ![talk](http://www.realfriendforagents.co.uk/wp-content/uploads/fly-solo-with-the-right-tone-of-voice.jpg)
 
-har har har
-    
-## Software requirements:
-##### web application framework
-    node.js (with connect and express)
-##### javascript developement
-    coffeescript (maybe not...)
-##### design framework
-    compass (which includes sass)
-##### special package managers
-    npm
-    gem
+## Dependencies:
+-  node.js (with connect and express) - *web application framework* 
+-  bootstrap - *front-end developement* 
+-  compass (which includes sass) - *design framework* 
+-  mongoDB - *database* 
+-  jade - *template engine* 
+-  npm, gem - *special package managers* 
 
 ## Installation:
     su
@@ -32,7 +27,7 @@ har har har
     cd show_tell
     git clone git@github.com:danielsnider/show_tell.git
 
-## Making your your first commit
+### How to commit:
     # set your username and email so we can identify you
     git config --global user.name "Daniel Snider"
     git config --global user.email "danielsnider12@gmail.com"
@@ -48,26 +43,20 @@ har har har
     git pull git@github.com:danielsnider/show_tell.git
     git push git@github.com:danielsnider/show_tell.git
     
-## Starting the websurver 
-    $ sudo node server.js
+### Starting webserver:
+    $ sudo nohup ./run.sh &
     
-## Directory structure
-`node_modules` - node.js utils
-
-`public` - stores uploaded files
-
-`routes` - dispatches web resquests to appropriate webpages
-
-`views` - webpages
-
-### Tooling Documentation: 
+### Documentation: 
 - Google Voice API https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html 
-- coffeescript http://coffeescript.org/
+- bootstrap http://twitter.github.io/bootstrap/base-css.html
 - node.js http://nodejs.org/api/index.html
 - sass http://sass-lang.com/
 - compass http://compass-style.org/reference/compass/
+- mongoDB http://docs.mongodb.org/manual/
+- jade http://jade-lang.com/command-line/
 
-Free video education: http://leveluptuts.com/tutorials
+####Login system example code:
+https://github.com/braitsch/node-login
 
-### Google Document for information sharing:
+### Google Document for comments:
 https://docs.google.com/document/d/1PsP9Rb0oEkOZE9ePCAP10lA9yCaiuAe6IfyX3sp4pjo/edit?usp=sharing
