@@ -115,6 +115,16 @@ app.post('/', function(req, res) {
     });
   });
 
+//go to this page to pull the latest git code and restart the webserver
+app.post('/restart', function(req, res) {
+
+    command = "./restart.sh";
+    child = exec(command, function (error, stdout, stderr) {
+      // console.log(command);
+      // console.log('stdout: ' + stdout);
+    });
+  });
+
 http.createServer(app).listen(app.get('port'), function(){
   // connect.static(__dirname)
   console.log("Express server listening on port " + app.get('port'));
