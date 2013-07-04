@@ -28,16 +28,15 @@ function changeButton()
 }
 
 
-
 var recognition = new webkitSpeechRecognition();
 recognition.continuous = true;
 recognition.interimResults = true;
 recognition.lang = "en";
 
 recognition.onresult = function (event) {
-    console.log("event");
+    // console.log("event");
     for (var i = event.resultIndex; i < event.results.length; ++i) {
-        console.log("final");
+        // console.log("final");
         $('textarea#transcript').val(event.results[i][0].transcript);
         checkForKeywordMatch(event.results[i][0].transcript);
     }

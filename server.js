@@ -38,6 +38,10 @@
 //route http get request to index.ejs page 
 app.get('/', routes.index);
 
+app.get('/edit', function(req, res){
+  res.render('edit', { title: 'Show and Tell' });
+ });
+
 //executes everytime some speech is recognized
 app.get('/checkForKeywordMatch.js?*', function(req, res){
   var file_list = new Array();
@@ -45,6 +49,7 @@ app.get('/checkForKeywordMatch.js?*', function(req, res){
   var queried_keyword_list = new Array();
   var command = "ls ./public/uploads/";
 
+  //set queried keyword list
   queried_keyword_list = req.query.body.split('-');
   console.log("queried_keyword_list: "+queried_keyword_list);
 
@@ -55,7 +60,7 @@ app.get('/checkForKeywordMatch.js?*', function(req, res){
       file_list = stdout.split("\n"); //create file list
       // console.log("file_list: "+file_list);
       
-      //set keywork list
+      //set stored keyword list
       for (var i=0; i < file_list.length; i++)
       {
         temparr = file_list[i].replace(/\.[^/.]+$/, ""); //remove file extension

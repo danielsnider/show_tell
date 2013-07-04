@@ -18,6 +18,6 @@
    // $('img#visuals').attr('src',"images/happy.jpg");
 
 
-   //FUNCTION INCOMPLETE
+   //FILE INCOMPLETE AND NOT USED
 };
 
