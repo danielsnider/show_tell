@@ -116,13 +116,17 @@ app.post('/', function(req, res) {
   });
 
 //go to this page to pull the latest git code and restart the webserver
-app.post('/restart', function(req, res) {
+app.get('/restart', function(req, res) {
 
-    command = "./restart.sh";
+    command = "pwd; ls; ./update_code.sh";
     child = exec(command, function (error, stdout, stderr) {
-      // console.log(command);
-      // console.log('stdout: ' + stdout);
+       console.log(command);
+       console.log('stdout: ' + stdout);
+       console.log('stderr: ' + stderr);
+       console.log('error: ' + error);
     });
+    // res.render('index', { title: 'Show and Tell' });
+
   });
 
 http.createServer(app).listen(app.get('port'), function(){
