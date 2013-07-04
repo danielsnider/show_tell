@@ -1,32 +1,172 @@
+
 <!DOCTYPE html>
-<html>
-<head>
-	<title><%= title %></title>
-	<link href='/stylesheets/style.css' rel='stylesheet'/>
-	<script type="text/javascript" charset="utf-8"></script>
-	<script src="/lib/jquery-1.10.1.min.js"></script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+
 	<script src="client-side-javascript.js"></script>
-</head>
+	<script src="/lib/jquery-1.10.1.min.js"></script>
 
-<body>
-	<div id="main">
-		<form action="/" method="post" enctype="multipart/form-data">
-			<label for="keyword">Keyword:</label>
-			<input type="text" name="keyword" id="keyword">
-			<br>
-			<label for="file">Filename:</label>
-			<input type="file" name="file" id="file">
-			<input type="submit" name="submit" value="submit">
-		</form><br><br>
+<style type="text/css">
 
-		Speech recognition: <input onclick="changeButton()" type="button" value="Start" id="startStopButton"></input><br>
-		Final result: <textarea rows="1" cols="50" id="transcript" value=""></textarea><br><br>
+.mic {
+	height: 32px;
+	padding: 10px;
+	top: -5px;
+	position: relative;
+}
 
-		
+#visuals {
+	/*position: relative;*/
+	/*top: -30px;*/
+}
 
-		<div id="myDiv">
-			<img src="" alt="visuals go here" height="300" width="420" id="visuals"></div>
-		</div>
-</body>
+.jumbotron {
+	/*margin: 20px 0;*/
+}
+
+#logo {
+	height: 40px;
+}
+
+</style>
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <!-- <h3 class="muted">Show and Tell</h3> -->
+        <img src="/images/show_and_tell.PNG" id="logo">
+      </div>
+
+      <hr>
+      <div class="pagination-centered">
+        <textarea class="input-xxlarge" rows="1" cols="50" id="transcript" value="" placeholder='Try saying "surfing" or "cat"...'></textarea>
+	<input type="image" src="/images/microphone.png" alt="mic" class="mic" id="startStopButton" onclick="changeButton()" value="Start">
+      </div>
+
+      <div class="jumbotron" id="visuals-div">
+        <h1>Start speaking to begin the show!</h1>
+        <p class="lead">Show and Tell is a revolutiounary new natural interface. It is professionally designed to enrich communication with visuals. It's sure to impress.</p>
+      </div>
+      <div class="pagination-centered">
+      	<a class="btn btn-large btn-success" href="/signup.html">Sign up today</a>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span6">
+          <h4>Create Visual Library</h4>
+          <p>Store visual materials on a cloud-based library for any presentations.</p>
+
+          <h4>Vocie Recognition</h4>
+          <p>Tag keywords to each piece of materials, and talk to our application with the keyword.</p>
+
+          <h4>Display Visuals</h4>
+          <p>Keywords are detected and the according visual materials are displayed.</p>
+        </div>
+
+        <div class="span6">
+          <h4>Enable Dynamic Presentations</h4>
+          <p>Follow any non-linear progression thourgh your presentation on the fly.</p>
+
+          <h4>Empower Natural Speech</h4>
+          <p>Natural speech and conversational control gets technology out of the way.</p>
+
+          <h4>Increase Meeting Efficiency</h4>
+          <p>Use visuals more often to increase everyone's level of understanding.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; Show and Tell 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/lib/bootstrap/js/jquery.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-transition.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-alert.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-modal.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-scrollspy.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-tab.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-popover.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-button.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap-typeahead.js"></script>
+
+  </body>
 </html>
-

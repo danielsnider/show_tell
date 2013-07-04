@@ -54,11 +54,12 @@ app.get('/checkForKeywordMatch.js?*', function(req, res){
 
       file_list = stdout.split("\n"); //create file list
       // console.log("file_list: "+file_list);
-
+      
       //set keywork list
       for (var i=0; i < file_list.length; i++)
       {
-        temparr = file_list[i].split("-");
+        temparr = file_list[i].replace(/\.[^/.]+$/, ""); //remove file extension
+        temparr = temparr.split(" "); //split keywords
         for (var x=0; x < temparr.length; x++)
         {
           var new_keyword = temparr[x].split("-");
@@ -81,9 +82,8 @@ app.get('/checkForKeywordMatch.js?*', function(req, res){
               {
                 console.log("match found: "+ file_list[y]);
                 res.writeHeader(200, {"Content-Type": "text/plain"});  
-                res.write('<img src="uploads/' + file_list[y] + '" alt="new visuals go here" height="300" width="420" id="visuals">');
+                res.write('<img src="uploads/' + file_list[y] + '" alt="new visuals go here"  id="visuals">');
                 res.end(); 
-              //return image or update image source
               }
             }
           }
@@ -91,7 +91,6 @@ app.get('/checkForKeywordMatch.js?*', function(req, res){
       }
     });
 
-   // $('img#visuals').attr('src',"images/happy.jpg");
  });
 
 
@@ -112,7 +111,7 @@ app.post('/', function(req, res) {
   });
 
 http.createServer(app).listen(app.get('port'), function(){
-  connect.static(__dirname)
+  // connect.static(__dirname)
   console.log("Express server listening on port " + app.get('port'));
 });
 
