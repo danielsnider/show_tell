@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/vendor/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 20px;
@@ -47,7 +47,7 @@
         margin-top: 28px;
       }
     </style>
-    <link href="/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -61,8 +61,9 @@
                     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="../assets/ico/favicon.png">
 
-	<script src="client-side-javascript.js"></script>
-	<script src="/lib/jquery-1.10.1.min.js"></script>
+	<script src="/js/index.js"></script>
+	<script src="/vendor/jquery-1.10.1.min.js"></script>
+  <script src="/vendor/bootstrap.js"></script>
 
 <style type="text/css">
 
@@ -87,6 +88,10 @@
 }
 
 </style>
+
+<script type="text/javascript">
+  var keywords = <%- JSON.stringify(keywords) %>;
+</script>
   </head>
 
   <body>
@@ -98,24 +103,25 @@
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
+          <li><a href="/login">Login</a></li>
         </ul>
         <!-- <h3 class="muted">Show and Tell</h3> -->
-        <img src="/images/show_and_tell.PNG" id="logo">
+        <img src="/img/show_and_tell.PNG" id="logo">
       </div>
 
       <hr>
       <div class="pagination-centered">
         <textarea class="input-xxlarge" rows="1" cols="50" id="transcript" value="" placeholder='Try saying "surfing" or "cat"...'></textarea>
-	      <input type="image" src="/images/microphone.png" alt="mic" class="mic" id="startStopButton" onclick="changeButton()" value="Start">
+        <input type="image" src="/img/microphone.png" alt="mic" class="mic" id="startStopButton" onclick="changeButton()" value="Start">
       </div>
 
       <div class="jumbotron" id="visuals-div">
         <h1>Start speaking to begin the show!</h1>
-        <p class="lead">Show and Tell is a revolutiounary new natural interface. It is professionally designed to enrich communication with visuals. It's sure to impress.</p>
+        <p class="lead">Show and Tell is a new way to give presentations, just use you voice to switch slides.</p>
       </div>
-      
+
       <div class="pagination-centered">
-      	<a class="btn btn-large btn-success" href="/signup.html">Sign up today</a>
+        <a class="btn btn-large btn-success" href="/signup.html">Sign up today</a>
       </div>
 
       <hr>
@@ -151,23 +157,5 @@
       </div>
 
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/lib/bootstrap/js/jquery.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-transition.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-alert.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-modal.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-dropdown.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-scrollspy.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-tab.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-tooltip.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-popover.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-button.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-collapse.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-carousel.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap-typeahead.js"></script>
-
   </body>
 </html>

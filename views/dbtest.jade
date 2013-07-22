@@ -1,0 +1,33 @@
+!!! 5
+html
+  head
+    title Edit your Decks
+    script(src='/vendor/jquery-1.10.1.min.js')
+    script(src='/dbtestclient.js')
+    script(src='/vendor/bootstrap.js')
+    link(rel='stylesheet', href='/vendor/bootstrap.css', media='screen')
+    link(rel='stylesheet', href='/css/dans-style.css')
+
+
+  body
+    
+    // ------------
+    //    Header
+    // -----------
+    div.container-narrow
+        img(src='/img/show_and_tell.PNG')#logo
+
+        p
+            br br
+            button(onclick="createDefaultDeck()").btn Create default deck
+
+        p
+            #result Result
+
+        br
+        p#data
+        |   nothing yet
+
+
+block content
+block scripts

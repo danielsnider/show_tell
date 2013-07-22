@@ -1,0 +1,38 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+.container-narrow {
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: center;
+}
+.center {
+  text-align: center;
+}
+#logo {
+  height: 40px;
+  padding: 0px 20px;
+}
+button#top-right-buttons {
+  margin: 0px 1px;
+}
+#add-to-collection {
+  margin: 0px 4px;
+}
+#main-content {
+  margin: 0 auto;
+  max-width: 700px;
+  min-width: 97%;
+}
+#left {
+  background-color: LightCyan;
+  height: 480px;
+}
+#right {
+  background-color: LightCyan;
+  height: 480px;
+}
+#just-left {
+  text-align: left;
+}
