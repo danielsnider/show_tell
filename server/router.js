@@ -15,6 +15,30 @@ app.get('/', function(req, res){
   res.render('index.ejs', { title: 'Show and Tell', keywords: req.session.keywords});
 });
 
+app.get('/annotate', function(req, res){
+  res.render('annotate.ejs', { title: 'Show and Tell', keywords: req.session.keywords});
+});
+
+
+app.get('/present', function(req, res){
+  res.render('present', { title: 'Show and Tell', keywords: req.session.keywords});
+
+      // else if (req.query.deckid) {
+      //   DB.getDeckById(req.query.deckid, function(e, cur_deck){
+      //     console.log("cur_deck:"+JSON.stringify(cur_deck));
+      //     DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
+      //       console.log("slides:"+slides)
+      //       req.session.deckid = cur_deck._id;
+      //       res.render('edit.jade', {
+      //         'user': JSON.stringify(req.session.user), // remove this!
+      //         'deck_name': cur_deck.name,
+      //         'decks': decks,
+      //         'slides': slides
+      //       });
+      //     });
+      //   });
+      // }
+});
 
 //executes everytime some speech is recognized
 app.get('/checkForKeywordMatch.js?*', function(req, res){
@@ -310,6 +334,7 @@ app.get('/edit', function(req, res){
         res.render('edit.jade', {
             'user': JSON.stringify(req.session.user), // remove this!
             'deck_name': 'You have 0 decks',
+            'deck_id': null,
             'decks': new Array(),
             'slides': new Array()
           });
@@ -323,6 +348,7 @@ app.get('/edit', function(req, res){
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
               'deck_name': cur_deck.name,
+              'deck_id': cur_deck._id,
               'decks': decks,
               'slides': slides
             });
@@ -339,6 +365,7 @@ app.get('/edit', function(req, res){
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
               'deck_name': cur_deck.name,
+              'deck_id': cur_deck._id,
               'decks': decks,
               'slides': slides
             });
