@@ -16,7 +16,30 @@ app.get('/', function(req, res){
 });
 
 app.get('/annotate', function(req, res){
-  res.render('annotate', { title: 'Show and Tell', keywords: req.session.keywords});
+    if (req.session.user == null)
+  {
+    // if user is not logged-in redirect back to login page
+    res.redirect('/login');
+  }
+  else {
+    DB.getDecksByUserId(req.session.user._id, function(e, decks){
+      DB.getMostRecentDeck(req.session.user._id, function(e, cur_deck){
+        console.log("cur_deck:"+JSON.stringify(cur_deck));
+        console.log("cur_deck._id:"+JSON.stringify(cur_deck._id));
+        DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
+          console.log("slides:"+JSON.stringify(slides[0]));
+          req.session.deckid = cur_deck._id;
+          res.render('annotate.jade', {
+            'user': JSON.stringify(req.session.user), // remove this!
+            'deck_name': cur_deck.name,
+            'deck_id': cur_deck._id,
+            'decks': decks,
+            'slides': slides
+          });
+        });
+      });
+    });
+  }
 });
 
 app.get('/annotate2', function(req, res){

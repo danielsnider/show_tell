@@ -1,166 +1,91 @@
 !!! 5
 html
-	head
-		title Edit your Decks
-		script(src='/vendor/jquery-1.10.1.min.js')
-		script(src='/js/edit.js')
-		script(src='/vendor/bootstrap.js')
-		link(rel='stylesheet', href='/vendor/bootstrap.css', media='screen')
-		link(rel='stylesheet', href='/css/dans-style.css')
+  head
+    title Edit your Decks
+    script(src='/vendor/jquery-1.10.1.min.js')
+    script(src='/js/annotate.js')
+    script(src='/vendor/bootstrap.js')
+    link(rel='stylesheet', href='/vendor/bootstrap.css', media='screen')
+    link(rel='stylesheet', href='/css/dans-style.css')
 
-	body
+  body
 
-		// ------------
-		//		Header
-		// -----------
-		div.container-narrow
-			img(src='/img/show_and_tell.PNG')#logo
+    // ------------
+    //    Header
+    // -----------
+    div.container-narrow
+      img(src='/img/show_and_tell.PNG')#logo
 
-			.btn-group#just-left
-				button(type="submit", data-toggle='dropdown').btn.dropdown-toggle#top-right-buttons
-					//|  Settings
-					span.caret
-					i.icon-wrench
-				ul.dropdown-menu
-					li
-						a(tabindex="-1", href="/home") Account Settings
-					li
-						a(tabindex="-1", href="#") placeholder
-					li.divider
-					li
-						a(tabindex="-1", href="#") Logout placeholder
+    //'user': JSON.stringify(req.session.user), // remove this!
+    //'deck_name': cur_deck.name,
+    //'deck_id': cur_deck,
+    //'decks': decks,
+    //'slides': slides
+      
 
-			//div#test
-			//	button(onclick="testquery()").btn.btn-info.pull-left test
-			//	#test_result Result
-		hr
+    div #{deck_name}
 
-		// ------------
-		//		Header ^
-		// -----------
+    div.container-fluid
+      div.row-fluid
+        div.span2
+          div.well.sidebar-nav
+            input(type="text", placeholder="Search").search-query.span9
 
-		div.row-fluid#main-content
+            // Add to Deck
+            a(href="#upload", role="button", data-toggle="modal").btn#add-to-deck.pull-right
+              i.icon-folder-open
+              | Add to Deck
 
-			// ------------
-			//		Left
-			// -----------
-			div.span6#left
-
-				// ------------
-				//		Left header
-				// -----------
-				div#center
-					//button(type="submit").btn.btn-info.pull-left
-					a(href="/present?=#{deck_id}", role="button").btn.btn-info.pull-left
-						| Present
-						i.icon-play.icon-white
-
-					span.lead#deck-name #{deck_name}
-
-					// Add to Deck
-					a(href="#upload", role="button", data-toggle="modal").btn#add-to-deck.pull-right
-						i.icon-folder-open
-						|   Add to Deck
-
-				div(tabindex="-1", role="dialog", aria-labelledby="uploadModal", aria-hidden="true")#upload.modal.hide.fade
-					div.modal-header
-						button(type="button", data-dismiss="modal", aria-hidden="true").close
-							| x
-						h3.myModalLabel Add to Deck
-						hr
-						form(action="/edit", method="post", enctype="multipart/form-data")
-							div.tabbable.tabs-left
-								ul.nav.nav-tabs
-									li.active
-										a(href="#tab1", data-toggle="tab") Upload
-									li
-										a(href="#tab2", data-toggle="tab") Take a snapshot
-									li
-										a(href="#tab3", data-toggle="tab") By URL
-									li
-										a(href="#tab4", data-toggle="tab") From my Decks
-								div.tab-content
-									div.tab-pane.active#tab1
-										p
-											| Drop files here or
-											input(type="file", name="file").file
-										p.muted
-											| Filetypes: jpg, gif, png, bmp, ppt, pptx
-									div.tab-pane#tab2
-										p
-											| hello world2
-									div.tab-pane#tab3
-										p
-											| hello world3
-									div.tab-pane#tab4
-										p
-											| hello world4
-							div.modal-footer
-								button(data-dismiss="modal", aria-hidden="true").btn Close
-								button(type="submit", name="submit").btn.btn-primary Add to Deck
-					// Add to Deck ^
-
-				// ------------
-				//		Left header ^
-				// -----------
-				
-				br
-				p
-					| Slides Display Area
-				span#slides slides:
-					each slide, i in slides
-						button 
-							#{slide._id}
-
-				div
-					br	
-
-				p
-					| Decks Display Area
-				div#deck-area
-					span#decks decks:
-						each deck, i in decks
-							button(onclick='deleteDeckById("#{deck._id}")') 
-								#{deck._id}
-				br
-				div
-					a(href="/createEmptyDeck", role="button").btn.btn-info.pull-left Create New Deck
-
-			// ------------
-			//		Left ^
-			// -----------
-
-			// ------------
-			//		Right
-			// -----------
-			div.span6#right
-				div.center
-					p
-					| Slide Display Area
-					div
-						img(src="#{slides[0].resource}")#current_slide
-
-				div#keywords-area.center
-					p
-					| Keywords Diplay Area
-					div#keywords 
-						each keyword, i in slides[0].keywords
-							p #{keyword}
+            each slide, i in slides
+              img(src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}')")
 
 
-				div#buttons
-				
+        div.span10
+          div#current_slide
+            img(src="#{slides[0].resource}", length="400", width="500")
 
-				
+          div#current_keywords
+            each keyword, i in slides[0].keywords
+              p #{keyword}
 
 
-			// ------------
-			//		Right ^
-			// -----------
-			div
-				p
-				|	user account: 
-				|	#{user}
 
-block content
-block scripts
+
+        // Upload pop-up window
+        div(tabindex="-1", role="dialog", aria-labelledby="uploadModal", aria-hidden="true")#upload.modal.hide.fade
+          div.modal-header
+            button(type="button", data-dismiss="modal", aria-hidden="true").close
+              | x
+            h3.myModalLabel Add to Deck
+            hr
+            form(action="/edit", method="post", enctype="multipart/form-data")
+              div.tabbable.tabs-left
+                ul.nav.nav-tabs
+                  li.active
+                    a(href="#tab1", data-toggle="tab") Upload
+                  li
+                    a(href="#tab2", data-toggle="tab") Take a snapshot
+                  li
+                    a(href="#tab3", data-toggle="tab") By URL
+                  li
+                    a(href="#tab4", data-toggle="tab") From my Decks
+                div.tab-content
+                  div.tab-pane.active#tab1
+                    p
+                      | Drop files here or
+                      input(type="file", name="file").file
+                    p.muted
+                      | Filetypes: jpg, gif, png, bmp, ppt, pptx
+                  div.tab-pane#tab2
+                    p
+                      | hello world2
+                  div.tab-pane#tab3
+                    p
+                      | hello world3
+                  div.tab-pane#tab4
+                    p
+                      | hello world4
+              div.modal-footer
+                button(data-dismiss="modal", aria-hidden="true").btn Close
+                button(type="submit", name="submit").btn.btn-primary Add to Deck
+          // Add to Deck ^
