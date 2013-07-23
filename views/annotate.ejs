@@ -10,15 +10,35 @@
 
 function myFunction()
 {
-var btn=document.createElement("img");
-var t=document.createTextNode("CLICK ME");
-btn.src="/img/slide.jpg"
-btn.appendChild(t);
-document.body.appendChild(btn);
+var node=document.createElement("LI");
+var textnode=document.createTextNode("Water");
+node.appendChild(textnode);
+//var btn=document.createElement("br");
+//var temp=document.getElementById("123123");
+//btn.src="../../img/slide.png";
+document.getElementById("123123").appendChild(textnode);
 };
 
 </script>
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
 
+    function drag(ev) {
+        ev.dataTransfer.setData("Text", ev.target.id);
+    }
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("Text");
+        var copyimg = document.createElement("img");
+        var original = document.getElementById(data);
+        copyimg.src = original.src;
+    copyimg.width = 700;
+    copyimg.height =400;
+        ev.target.appendChild(copyimg);
+    }
+</script>
     <!-- Le styles -->
     <link href="/vendor/bootstrap.css" rel="stylesheet">
     <style type="text/css">
@@ -38,6 +58,7 @@ document.body.appendChild(btn);
           padding-right: 5px;
         }
       }
+    
     </style>
     <link href="/vendor/bootstrap-responsive.css" rel="stylesheet">
 
@@ -69,14 +90,14 @@ document.body.appendChild(btn);
             <p class="navbar-text pull-right">
                <a href="#" class="btn btn-primary btn-medium">Present</a>
             </p>
-			
-			<div class="row-fluid">		
+      
+      <div class="row-fluid">   
               <ul class="nav offset3">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>			  
+              <li><a href="#contact">Contact</a></li>       
               </ul>
-			</div>
+      </div>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -87,23 +108,30 @@ document.body.appendChild(btn);
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list  pull-left">
-			<input type="text" class="search-query span9" placeholder="Search">
-		    </form>
-			
+      <input type="text" class="search-query span9" placeholder="Search">
+        </form>
+      
 
             </ul>
-			<ul class="thumbnail">
-			  <button onclick="myFunction()">Upload</button>
-			  <img onclick="myFunction()" src="/img/slide.jpg"  >
-			  <img src="/img/add.png">
-			</ul>
+       <div id="test1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <p>
+        <input type="file" name="datafile" size="40">
+      </p>
+        <div>
+          <input type="submit" value="Send">
+        </div>
+      </form>
+        <!--<button onclick="myFunction()">Try it</button>-->
+              <img id="drag1" src="../../img/slide.png" draggable="true" ondragstart="drag(event)" width="336" height="69">
+              <img id="Img1" src="../../img/add.png" draggable="true" ondragstart="drag(event)" width="336" height="69">
+      </div>
           </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span10">
-			<img src="/img/slide.jpg" class="img-rounded">
+        </div><!--/span--> 
+        <div id="div1" class="span10" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!--<img src="../../img/slide.png" class="img-rounded">-->
         </div><!--/span-->
       </div><!--/row-->
-
+<div id="123123"></div>
       <hr>
 
       <footer>
@@ -115,19 +143,19 @@ document.body.appendChild(btn);
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/vendor/jquery.js"></script>
-    <script src="/vendor/bootstrap-transition.js"></script>
-    <script src="/vendor/bootstrap-alert.js"></script>
-    <script src="/vendor/bootstrap-modal.js"></script>
-    <script src="/vendor/bootstrap-dropdown.js"></script>
-    <script src="/vendor/bootstrap-scrollspy.js"></script>
-    <script src="/vendor/bootstrap-tab.js"></script>
-    <script src="/vendor/bootstrap-tooltip.js"></script>
-    <script src="/vendor/bootstrap-popover.js"></script>
-    <script src="/vendor/bootstrap-button.js"></script>
-    <script src="/vendor/bootstrap-collapse.js"></script>
-    <script src="/vendor/bootstrap-carousel.js"></script>
-    <script src="/vendor/bootstrap-typeahead.js"></script>
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
 
   </body>
 </html>

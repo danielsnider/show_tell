@@ -16,6 +16,10 @@ app.get('/', function(req, res){
 });
 
 app.get('/annotate', function(req, res){
+  res.render('annotate', { title: 'Show and Tell', keywords: req.session.keywords});
+});
+
+app.get('/annotate2', function(req, res){
   res.render('annotate.ejs', { title: 'Show and Tell', keywords: req.session.keywords});
 });
 
