@@ -1,3 +1,34 @@
+$(document).ready(function(){
+
+    //when keyword change is typed, change keywords in database
+    $("#keywords_text_area").bind("keyup", function(event, ui) { 
+        updateKeywords($("#keywords_text_area").val()); // TOTALLY INEFFICIENT (This does a database update query on every keystroke... to do: cache keyword changes locally and commit in lump)
+    });
+
+    //if keyword change is made and it's text area is unfocused, update the local variable for the keyword and other references
+    $("#keywords_text_area").change( function() { 
+      var id;
+      for (var i = 0; i < slides_arr.length; i++) {
+        if (slides_arr[i]._id == current_slide_id) {
+          slides_arr[i].keywords = $("#keywords_text_area").val();
+          id = '#slide'+slides_arr[i]._id;
+          $(id).html('<img src="' + slides_arr[i].resource + '", onclick="displaySlide(\'' + slides_arr[i].resource + '\', \'' + slides_arr[i].keywords + '\', \'' + slides_arr[i]._id + '\')">');
+        }
+      };
+    });
+});
+
+function updateKeywords(keywords)
+{
+  var xmlhttp;
+  if (window.XMLHttpRequest)
+  {
+    xmlhttp=new XMLHttpRequest();
+  }
+  xmlhttp.open("GET","updateKeywords?slideid=" + current_slide_id + "&keywords=" + keywords , true);
+  xmlhttp.send();
+}
+
 function myFunction()
 {
 var node=document.createElement("LI");
@@ -28,9 +59,14 @@ function drop(ev) {
     ev.target.appendChild(copyimg);
 }
 
-function displaySlide(slide, keywords) {
-    console.log(slide);
-    console.log(keywords);
-    $('#current_slide').html('<img src="' + slide + '", length="400", width="500")>');
-    $('#current_keywords').html(keywords);
+function displaySlide(resource, keywords, id) {
+    $('#current_slide').html('<img src="' + resource + '", length="400", width="500")>');
+    $('#keywords_text_area').val(keywords);
+    current_slide_id = id;
 }
+
+// $('#keywords_text_area').change(function(){
+//     var keywords = ($(this).val());
+//     console.log(keywords);
+// });
+

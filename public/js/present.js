@@ -37,9 +37,10 @@ recognition.lang = "en";
 recognition.onresult = function (event) {
   // console.log("event");
   for (var i = event.resultIndex; i < event.results.length; ++i) {
-    // console.log("final");
+    console.log("checking: "+ event.results[i][0].transcript);
     $('textarea#transcript').val(event.results[i][0].transcript);
-    checkForKeywordMatch(event.results[i][0].transcript);
+    // checkForKeywordMatch(event.results[i][0].transcript);
+    checkKeyword(event.results[i][0].transcript);
   }
 };
 
@@ -54,10 +55,34 @@ function checkForKeywordMatch(transcript)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-      document.getElementById("visuals-div").innerHTML=xmlhttp.responseText;
+      document.getElementById("slide-area").innerHTML=xmlhttp.responseText;
     }
   }
   xmlhttp.open("GET","checkForKeywordMatch.js?body="+transcript.replace(/ /g,'-') ,true);
   xmlhttp.send();
+}
+
+function checkKeyword(transcript)
+{
+  transcript = transcript.split(' ');
+
+  var slides = slides_arr;
+
+  console.log(slides);
+
+  for (var x = 0; x < slides.length; x++) {
+    for (var y = 0; y < slides[x].keywords.length; y++) {
+      for (var z = 0; z < transcript.length; z++) {
+        match = slides[x].keywords[y].indexOf(transcript[z]);
+        if ( match >= 0 && transcript[z] != '') {
+          console.log("match found: " + transcript[z]);
+          $('#slide-area').html('<img src="' + slides[x].resource + '", length="400", width="500")>');
+        }
+      }
+    }
+  }
+  //for each slide
+  //if a keyword is found in the transcript
+  //show the slide
 }
 

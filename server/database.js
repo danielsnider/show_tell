@@ -311,3 +311,9 @@ exports.addImage = function(file_path, user_id, deck_id, callback) {
 
 	slides.insert(slide, {safe: true}, callback);
 }
+
+exports.updateKeywords = function(slide_id, keywords, callback) {
+	date = moment().format('MMMM Do YYYY, h:mm:ss a');
+
+		slides.update({ '_id' : getObjectId(slide_id) }, {$set: {keywords: keywords, date_modified: date}}, callback);
+}

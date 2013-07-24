@@ -6,12 +6,35 @@ html
 		script(src='/js/present.js')
 		script(src='/vendor/bootstrap.js')
 		link(rel='stylesheet', href='/vendor/bootstrap.css', media='screen')
-		link(rel='stylesheet', href='/css/dans-style.css')
+		link(rel='stylesheet', href='/css/present.css')
+
+		// put JADE slides variable into javascript array
+		script
+			console.log("!{slides}");
+			var slides_arr = new Array();
+		each slide, i in slides
+			script
+				temp_slide = {
+					resource: "#{slide.resource}",
+					keywords: []
+				};
+				num_keywords = "#{slide.keywords}".split(',').length;
+				for (var x = 0; x < num_keywords; x++) {
+					//console.log("#{slide.keywords}".split(',')[x]);
+					keyword = "#{slide.keywords}".split(',')[x];
+					temp_slide.keywords.push(keyword);
+				}
+				slides_arr.push(temp_slide);
+		
+
+
 
 	body
+		div#container
+			div.pagination-centered#content
+				input(type="image", src="/img/microphone.png", alt="mic", onclick="changeButton()", value="Start")#startStopButton.mic
 
-		// ------------
-		//		Header
-		// -----------
-		div.container-narrow
-			img(src='/img/show_and_tell.PNG')#logo
+				div.jumbotron#slide-area
+					h1 Ready? Click the Microphone to start.
+				
+				textarea(value="", rows="1", cols="50", placeholder='Try saying "surfing" or "cat"...').input-xxlarge#transcript

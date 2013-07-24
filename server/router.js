@@ -15,56 +15,18 @@ app.get('/', function(req, res){
   res.render('index.ejs', { title: 'Show and Tell', keywords: req.session.keywords});
 });
 
-app.get('/annotate', function(req, res){
-    if (req.session.user == null)
-  {
-    // if user is not logged-in redirect back to login page
-    res.redirect('/login');
-  }
-  else {
-    DB.getDecksByUserId(req.session.user._id, function(e, decks){
-      DB.getMostRecentDeck(req.session.user._id, function(e, cur_deck){
-        console.log("cur_deck:"+JSON.stringify(cur_deck));
-        console.log("cur_deck._id:"+JSON.stringify(cur_deck._id));
-        DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
-          console.log("slides:"+JSON.stringify(slides[0]));
-          req.session.deckid = cur_deck._id;
-          res.render('annotate.jade', {
-            'user': JSON.stringify(req.session.user), // remove this!
-            'deck_name': cur_deck.name,
-            'deck_id': cur_deck._id,
-            'decks': decks,
-            'slides': slides
-          });
-        });
+app.get('/present', function(req, res){
+  if (req.query.deckid) {
+    DB.getSlidesByDeckId(req.query.deckid, function(e, slides){
+      console.log("slides:"+slides)
+      res.render('present.jade', {
+        'slides': slides
       });
     });
   }
-});
-
-app.get('/annotate2', function(req, res){
-  res.render('annotate.ejs', { title: 'Show and Tell', keywords: req.session.keywords});
-});
-
-
-app.get('/present', function(req, res){
-  res.render('present', { title: 'Show and Tell', keywords: req.session.keywords});
-
-      // else if (req.query.deckid) {
-      //   DB.getDeckById(req.query.deckid, function(e, cur_deck){
-      //     console.log("cur_deck:"+JSON.stringify(cur_deck));
-      //     DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
-      //       console.log("slides:"+slides)
-      //       req.session.deckid = cur_deck._id;
-      //       res.render('edit.jade', {
-      //         'user': JSON.stringify(req.session.user), // remove this!
-      //         'deck_name': cur_deck.name,
-      //         'decks': decks,
-      //         'slides': slides
-      //       });
-      //     });
-      //   });
-      // }
+  else {
+    res.redirect('/login');
+  }
 });
 
 //executes everytime some speech is recognized
@@ -424,7 +386,7 @@ app.post('/edit', function(req, res){
           });
         }
       else {
-        res.send('not-image',200);
+        res.send('not-image',400);
       }
       }
     }
@@ -433,6 +395,23 @@ app.post('/edit', function(req, res){
     //call insert pptx
 
 });
+
+app.get('/updateKeywords', function(req, res){
+  if (req.query.slideid != 'undefined' && req.query.keywords != 'undefined') {
+    var keywords_arr = req.query.keywords.replace(/%02/g," ").split(',');
+    DB.updateKeywords(req.query.slideid, keywords_arr, function(e, count){
+      if (count == 1)
+      {
+        res.send(200);
+      }
+      else { res.send("update-error",200); }
+    });
+  }
+  else {
+    res.send('invalid-keywork-update-request',400);
+  }
+});
+
 
 app.get('/testquery', function(req, res){
   if (req.session.user == null){

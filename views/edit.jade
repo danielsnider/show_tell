@@ -3,10 +3,33 @@ html
   head
     title Edit your Decks
     script(src='/vendor/jquery-1.10.1.min.js')
-    script(src='/js/annotate.js')
+    script(src='/js/edit.js')
     script(src='/vendor/bootstrap.js')
     link(rel='stylesheet', href='/vendor/bootstrap.css', media='screen')
-    link(rel='stylesheet', href='/css/dans-style.css')
+    link(rel='stylesheet', href='/css/style2.css')
+
+    // put JADE slides variable into javascript array
+    script
+      console.log("!{slides}");
+      var slides_arr = new Array();
+    each slide, i in slides
+      script
+        temp_slide = {
+          _id: "#{slide._id}",
+          resource: "#{slide.resource}",
+          keywords: []
+        };
+        num_keywords = "#{slide.keywords}".split(',').length;
+        for (var x = 0; x < num_keywords; x++) {
+          //console.log("#{slide.keywords}".split(',')[x]);
+          keyword = "#{slide.keywords}".split(',')[x];
+          temp_slide.keywords.push(keyword);
+        }
+        slides_arr.push(temp_slide);
+
+    // save current slide is javascipt variable
+    script
+      var current_slide_id = "#{slides[0]._id}"
 
   body
 
@@ -14,21 +37,33 @@ html
     //    Header
     // -----------
     div.container-narrow
-      img(src='/img/show_and_tell.PNG')#logo
+    div.navbar.navbar-inverse.navbar-fixed-top
+      div.navbar-inner
+        div.container-fluid
+          button.btn.btn-navbar
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href="#") Show & Tell
+          div.nav-collapse.collapse
+          p.navbar-text.pull-right
+            a.btn.btn-medium(href="#") Settings 
+            a.btn.btn-primary.btn-medium(href="/present?deckid=#{deck_id}") Present
 
-    //'user': JSON.stringify(req.session.user), // remove this!
-    //'deck_name': cur_deck.name,
-    //'deck_id': cur_deck,
-    //'decks': decks,
-    //'slides': slides
+
+              // 'user': JSON.stringify(req.session.user), // remove this!
+              // 'deck_name': cur_deck.name,
+              // 'deck_id': cur_deck._id,
+              // 'decks': decks,
+              // 'slides': slides
       
 
-    div #{deck_name}
 
     div.container-fluid
       div.row-fluid
-        div.span2
-          div.well.sidebar-nav
+        div.span4
+          div.well.sidebar-nav#sidebar
+            div #{deck_name}
             input(type="text", placeholder="Search").search-query.span9
 
             // Add to Deck
@@ -37,18 +72,34 @@ html
               | Add to Deck
 
             each slide, i in slides
-              img(src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}')")
+              div(id="slide#{slide._id}")
+                img(src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}', '#{slide._id}')")
 
 
-        div.span10
-          div#current_slide
-            img(src="#{slides[0].resource}", length="400", width="500")
+          div.well.sidebar-nav
+            // Add to Deck
+            a(href="#createEmptyDeck", role="button", data-toggle="modal").btn#add-to-deck.pull-right
+              i.icon-folder-open
+              | Create New Deck 
 
-          div#current_keywords
-            each keyword, i in slides[0].keywords
-              p #{keyword}
+            each deck, i in decks 
+              div #{deck.name}
+        div.span8
+          table.table.table-bordered
+            tr
+              td
+                div#current_slide
+                  img(src="#{slides[0].resource}", length="400", width="500")#current_img
+            tr
+              td
+                div#current_keywords
+                  textarea(type="text", rows="10", cols="50")#keywords_text_area
+                    !{slides[0].keywords}
+                //each keyword, i in slides[0].keywords
+                //!{keyword}
 
 
+                
 
 
         // Upload pop-up window
