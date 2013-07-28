@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
     //when keyword change is typed, change keywords in database
@@ -12,7 +13,7 @@ $(document).ready(function(){
         if (slides_arr[i]._id == current_slide_id) {
           slides_arr[i].keywords = $("#keywords_text_area").val();
           id = '#slide'+slides_arr[i]._id;
-          $(id).html('<img src="' + slides_arr[i].resource + '", onclick="displaySlide(\'' + slides_arr[i].resource + '\', \'' + slides_arr[i].keywords + '\', \'' + slides_arr[i]._id + '\')">');
+          $(id).html('<img id="current_img", src="' + slides_arr[i].resource + '", onclick="displaySlide(\'' + slides_arr[i].resource + '\', \'' + slides_arr[i].keywords + '\', \'' + slides_arr[i]._id + '\')">');
         }
       };
     });
@@ -60,10 +61,21 @@ function drop(ev) {
 }
 
 function displaySlide(resource, keywords, id) {
-    $('#current_slide').html('<img src="' + resource + '", length="400", width="500")>');
+    $('#current_slide').html('<img id="current_img", src="' + resource + '")>');
     $('#keywords_text_area').val(keywords);
     current_slide_id = id;
 }
+
+// $(document).bind('keypress', 'left', function() {
+//     alert('left (bind) handled by jQuery.hotkeys');
+// });
+
+// $(document).bind('keypress', 'right', function() {
+//     alert('right (bind) handled by jQuery.hotkeys');
+// });
+
+
+
 
 // $('#keywords_text_area').change(function(){
 //     var keywords = ($(this).val());

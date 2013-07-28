@@ -1,1 +1,4 @@
 nohup.out
+./public/uploads/*
+*.pem
+*.ppk

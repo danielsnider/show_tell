@@ -254,7 +254,7 @@ var createDefaultDeck = function(user_id, callback)
 
 exports.getDecksByUserId = function(user_id, callback) 
 {
-	decks.find({ 'owner_id': user_id }).toArray(callback);
+	decks.find({ 'owner_id': user_id }, {'sort':'pos'}).toArray(callback);
 }
 
 exports.getDeckById = function(deck_id, callback) 
@@ -278,7 +278,7 @@ exports.getSlidesByOwnerId = function(owner_id, callback)
 
 exports.createEmptyDeck = function (user_id, callback) {
 	date = moment().format('MMMM Do YYYY, h:mm:ss a');
- 	
+
 	//create empty deck 
 	var deck = { 
 		name : "New Deck", 
@@ -292,28 +292,73 @@ exports.createEmptyDeck = function (user_id, callback) {
 
 exports.deleteDeckById = function(id){
 	decks.remove({'_id': getObjectId(id)},function(err, count){
-		console.log("count: "+count);
+		//success check
 	});
 }
 
-exports.addImage = function(file_path, user_id, deck_id, callback) {
+exports.createSlide = function(file_path, user_id, deck_id, callback) {
 	date = moment().format('MMMM Do YYYY, h:mm:ss a');
   
-	var slide = { 
-		owner_id : user_id, 
- 		deck_id : deck_id,
-		resource : file_path, 
-		keywords : [], 
-		type : "img",
- 		pos : "", 
-		date_created : date, 
- 		date_modified : date };
+	maxPosition(deck_id, function(max_pos){
+		var pos = max_pos + 1;
+		console.log("pos: "+ pos);
+		var slide = { 
+			owner_id : user_id, 
+	 		deck_id : deck_id,
+			resource : file_path, 
+			keywords : [], 
+			type : "img",
+	 		pos : pos, 
+			date_created : date, 
+	 		date_modified : date };
 
-	slides.insert(slide, {safe: true}, callback);
+		slides.insert(slide, {safe: true}, callback);
+	});
 }
 
 exports.updateKeywords = function(slide_id, keywords, callback) {
 	date = moment().format('MMMM Do YYYY, h:mm:ss a');
 
-		slides.update({ '_id' : getObjectId(slide_id) }, {$set: {keywords: keywords, date_modified: date}}, callback);
+	slides.update({ '_id' : getObjectId(slide_id) }, {$set: {keywords: keywords, date_modified: date}}, callback);
+}
+
+//exports.maxPosition = function(deck_id, keywords, callback) {
+function maxPosition(deck_id, callback) {
+	var max = -1;
+	console.log("max deck_id:" + deck_id);
+	slides.find({ 'deck_id': deck_id.toString() }, {"sort":"pos"}, {safe: true}).toArray( function(err, slides_out){
+		console.log(slides_out);
+		console.log(JSON.stringify(slides_out));
+		for (var i = 0; i < slides_out.length; i++) {
+			console.log("slides_out[0].pos: "+ slides_out[i].pos);
+			if (parseInt(slides_out[i].pos) > max) { max = slides_out[i].pos; }
+		};
+		console.log("max :"+max);
+		callback(max);
+	});
+} 
+
+exports.fixSlideOrder = function(deck_id) {
+	slides.find({ 'deck_id': deck_id.toString() }, {safe: true}).toArray( function(err, slides_out){
+		// var exec = require('child_process').exec, child;
+		// var count = -1;
+		// slides_out.forEach( function (slide){
+		// 	count++;
+		// 	command = 'mongo show_tell --eval  \'db.slides.update({ _id : "' +slide._id+ '" }, {$set: {pos: "'+count+'"}}, {safe: true})\'';
+		// 	child = exec(command, function (error, stdout, stderr) {
+		// 		console.log("command: "+command);
+		//       	console.log('stdout: ' + stdout);
+		//     });
+		// });
+		// console.log(slides_out);
+		// console.log(JSON.stringify(slides_out));
+		for (var i = 0; i < slides_out.length; i++) {
+			console.log("setting slide pos: "+ i);
+			slides.update({ '_id' : slides_out[i]._id }, {$set: {pos: i}}, {safe: true}, function(err, o) {
+				console.log("count: "+o);
+			});
+		};
+
+		// slides.find({ 'deck_id': deck_id.toString() }).toArray( function(err, slides){
+	});
 }

@@ -1,7 +1,7 @@
 !!! 5
 html
 	head
-		title Edit your Decks
+		title Show & Tell
 		script(src='/vendor/jquery-1.10.1.min.js')
 		script(src='/js/present.js')
 		script(src='/vendor/bootstrap.js')
@@ -15,6 +15,7 @@ html
 		each slide, i in slides
 			script
 				temp_slide = {
+					_id: "#{slide._id}",
 					resource: "#{slide.resource}",
 					keywords: []
 				};
@@ -30,11 +31,13 @@ html
 
 
 	body
-		div#container
-			div.pagination-centered#content
-				input(type="image", src="/img/microphone.png", alt="mic", onclick="changeButton()", value="Start")#startStopButton.mic
+		div.pagination-centered
+			input(type="image", src="/img/microphone.png", alt="mic", onclick="changeButton()", value="Start")#startStopButton.mic
 
-				div.jumbotron#slide-area
-					h1 Ready? Click the Microphone to start.
-				
-				textarea(value="", rows="1", cols="50", placeholder='Try saying "surfing" or "cat"...').input-xxlarge#transcript
+			div.jumbotron#slide-area
+				h1.start_text Ready? Click the microphone to start keyword detection. 
+				h2.start_text_subtitle Or press the "right" key.
+			
+			textarea(value="", rows="1", cols="40", placeholder='What you say will appear here...').input-xxlarge#transcript
+
+			a.btn.btn-primary.btn-medium(href="/edit?deckid=#{deck_id}")#edit_button Edit

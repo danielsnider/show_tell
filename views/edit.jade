@@ -6,14 +6,14 @@ html
     script(src='/js/edit.js')
     script(src='/vendor/bootstrap.js')
     link(rel='stylesheet', href='/vendor/bootstrap.css', media='screen')
-    link(rel='stylesheet', href='/css/style2.css')
+    link(rel='stylesheet', href='/css/edit.css')
 
     // put JADE slides variable into javascript array
-    script
+    script.
       console.log("!{slides}");
       var slides_arr = new Array();
     each slide, i in slides
-      script
+      script.
         temp_slide = {
           _id: "#{slide._id}",
           resource: "#{slide.resource}",
@@ -28,8 +28,13 @@ html
         slides_arr.push(temp_slide);
 
     // save current slide is javascipt variable
-    script
-      var current_slide_id = "#{slides[0]._id}"
+    if slides[0]
+      script.
+        var current_slide_id = "#{slides[0]._id}"
+    else
+      script.
+        var current_slide_id = "noslides"
+
 
   body
 
@@ -47,8 +52,8 @@ html
           a.brand(href="#") Show & Tell
           div.nav-collapse.collapse
           p.navbar-text.pull-right
-            a.btn.btn-medium(href="#") Settings 
-            a.btn.btn-primary.btn-medium(href="/present?deckid=#{deck_id}") Present
+            a.btn.btn-medium(href="/home").myBtn Account Settings 
+            a.btn.btn-primary.btn-medium(href="/present?deckid=#{deck_id}").myBtn Present
 
 
               // 'user': JSON.stringify(req.session.user), // remove this!
@@ -61,42 +66,44 @@ html
 
     div.container-fluid
       div.row-fluid
-        div.span4
+        div.span3
           div.well.sidebar-nav#sidebar
-            div #{deck_name}
-            input(type="text", placeholder="Search").search-query.span9
+            span#sidebar_top
+              div#deckname #{deck_name}
+              input(type="text", placeholder="Search").search-query.span7#nav_menue
 
-            // Add to Deck
-            a(href="#upload", role="button", data-toggle="modal").btn#add-to-deck.pull-right
-              i.icon-folder-open
-              | Add to Deck
+              // Add to Deck
+              a(href="#upload", role="button", data-toggle="modal").btn#add-to-deck
+                i.icon-folder-open
+                |  Add to Deck
 
-            each slide, i in slides
-              div(id="slide#{slide._id}")
-                img(src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}', '#{slide._id}')")
+            div#slides_scrollarea
+              each slide, i in slides
+                div(id="slide#{slide._id}")#a_slide
+                  img(src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}', '#{slide._id}')")
 
 
           div.well.sidebar-nav
             // Add to Deck
-            a(href="#createEmptyDeck", role="button", data-toggle="modal").btn#add-to-deck.pull-right
+            a(href="/createEmptyDeck", role="button", data-toggle="modal").btn#add-to-deck.pull-right
               i.icon-folder-open
-              | Create New Deck 
+              |  Create New Deck 
 
             each deck, i in decks 
-              div #{deck.name}
-        div.span8
-          table.table.table-bordered
-            tr
-              td
-                div#current_slide
-                  img(src="#{slides[0].resource}", length="400", width="500")#current_img
-            tr
-              td
-                div#current_keywords
-                  textarea(type="text", rows="10", cols="50")#keywords_text_area
-                    !{slides[0].keywords}
-                //each keyword, i in slides[0].keywords
-                //!{keyword}
+              div 
+                a(href="/edit?deckid=#{deck._id}") #{deck.name}
+        div.span9.well
+          div#current_slide
+            if slides[0]
+              img(src="#{slides[0].resource}")#current_img
+            else
+              p No slides in deck yet...
+          div
+            textarea(type="text")#keywords_text_area
+              if slides[0]
+                !{slides[0].keywords}
+              else
+                "No slides in deck yet..."
 
 
                 
@@ -124,7 +131,7 @@ html
                   div.tab-pane.active#tab1
                     p
                       | Drop files here or
-                      input(type="file", name="file").file
+                      input(type="file", name="file", multiple).file
                     p.muted
                       | Filetypes: jpg, gif, png, bmp, ppt, pptx
                   div.tab-pane#tab2

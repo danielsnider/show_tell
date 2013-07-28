@@ -1,4 +1,32 @@
 console.log("starting");
+var current_slide_id = "";
+var current_slide_keywords = [];
+
+var recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.lang = "en";
+
+recognition.onresult = function (event) {
+  console.log("function call: ");
+  console.log("current_slide_keywords: "+JSON.stringify(current_slide_keywords));
+  
+  for (var i = event.resultIndex; i < event.results.length; ++i) {
+    console.log("checking: "+ event.results[i][0].transcript);
+    for (var y = 0; y < current_slide_keywords.length; y++) {
+      console.log("current_slide_keywords[y] == event.results[i][0].transcript: -" +current_slide_keywords[y] +"- -"+ event.results[i][0].transcript)+"-";
+      if (event.results[i][0].transcript.indexOf(current_slide_keywords[y]) >= 0 ){
+        console.log("duplicate ignored");
+        return false;
+      }
+    }
+    // if (event.results[i].isFinal) {
+      console.log("is final: "+ event.results[i][0].transcript);
+      //$('textarea#transcript').val(event.results[i][0].transcript);
+      checkKeyword(event.results[i][0].transcript);
+    // }
+  }
+};
 
 window.onload = function()
 {
@@ -26,24 +54,6 @@ function changeButton()
   }
 }
 
-
-var recognition = new webkitSpeechRecognition();
-recognition.continuous = true;
-recognition.interimResults = true;
-recognition.lang = "en";
-
-
-
-recognition.onresult = function (event) {
-  // console.log("event");
-  for (var i = event.resultIndex; i < event.results.length; ++i) {
-    console.log("checking: "+ event.results[i][0].transcript);
-    $('textarea#transcript').val(event.results[i][0].transcript);
-    // checkForKeywordMatch(event.results[i][0].transcript);
-    checkKeyword(event.results[i][0].transcript);
-  }
-};
-
 function checkForKeywordMatch(transcript)
 {
   var xmlhttp;
@@ -64,19 +74,19 @@ function checkForKeywordMatch(transcript)
 
 function checkKeyword(transcript)
 {
+  $('#transcript').val(transcript);
   transcript = transcript.split(' ');
 
-  var slides = slides_arr;
-
-  console.log(slides);
-
-  for (var x = 0; x < slides.length; x++) {
-    for (var y = 0; y < slides[x].keywords.length; y++) {
+  for (var x = 0; x < slides_arr.length; x++) {
+    for (var y = 0; y < slides_arr[x].keywords.length; y++) {
       for (var z = 0; z < transcript.length; z++) {
-        match = slides[x].keywords[y].indexOf(transcript[z]);
+        match = slides_arr[x].keywords[y].indexOf(transcript[z]);
         if ( match >= 0 && transcript[z] != '') {
           console.log("match found: " + transcript[z]);
-          $('#slide-area').html('<img src="' + slides[x].resource + '", length="400", width="500")>');
+          current_slide_keywords = slides_arr[x].keywords;
+          current_slide_id = slides_arr[x]._id;
+          $('#slide-area').html('<img src="' + slides_arr[x].resource + '", id="slide")>');
+          return true;
         }
       }
     }
@@ -86,3 +96,31 @@ function checkKeyword(transcript)
   //show the slide
 }
 
+$(document).keydown(function(e){
+  if (current_slide_id == "") { //if no slide shown yet, and right is pressed, show the first slide
+    if (e.keyCode == 39) { //right
+      $('#slide-area').html('<img src="' + slides_arr[0].resource + '", id="slide")>');
+      current_slide_id = slides_arr[0]._id;
+    }
+  }
+  else {
+    for (var i = 0; i < slides_arr.length; i++) {
+      if (slides_arr[i]._id == current_slide_id) {
+        if (e.keyCode == 37) { //left
+          if (slides_arr[i-1]) {
+            $('#slide-area').html('<img src="' + slides_arr[i-1].resource + '", id="slide")>');
+            current_slide_id = slides_arr[i-1]._id;
+            return true;
+          }
+        }
+        else if (e.keyCode == 39) { //right
+          if (slides_arr[i+1]) {
+            $('#slide-area').html('<img src="' + slides_arr[i+1].resource + '", id="slide")>');
+            current_slide_id = slides_arr[i+1]._id;
+            return true;
+         }
+        }
+      }
+    }
+  }
+});

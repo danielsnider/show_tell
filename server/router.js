@@ -7,6 +7,11 @@ var DB = require('./database');
 var CT = require('./country-list');
 var EM = require('./email-dispatcher');
 
+var formidable = require('formidable'),
+    http = require('http'),
+    util = require('util');
+
+
 module.exports = function(app) {
 
 
@@ -16,11 +21,13 @@ app.get('/', function(req, res){
 });
 
 app.get('/present', function(req, res){
+  DB.fixSlideOrder(req.session.deckid); // BUG
   if (req.query.deckid) {
     DB.getSlidesByDeckId(req.query.deckid, function(e, slides){
       console.log("slides:"+slides)
       res.render('present.jade', {
-        'slides': slides
+        'slides': slides,
+        'deck_id': req.query.deckid
       });
     });
   }
@@ -90,8 +97,6 @@ app.get('/checkForKeywordMatch.js?*', function(req, res){
 app.post('/', function(req, res) {
   res.render('index', { title: 'Show and Tell' });
 
-    // console.log(req.body);
-    // console.log(req.files);
     var keyword = req.body.keyword.replace(/ /g,'-');
     var file = req.files.file.path;
 
@@ -330,9 +335,7 @@ app.get('/edit', function(req, res){
       }
       else if (req.query.deckid) {
         DB.getDeckById(req.query.deckid, function(e, cur_deck){
-          console.log("cur_deck:"+JSON.stringify(cur_deck));
           DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
-            console.log("slides:"+slides)
             req.session.deckid = cur_deck._id;
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
@@ -346,10 +349,7 @@ app.get('/edit', function(req, res){
       }
       else {
         DB.getMostRecentDeck(req.session.user._id, function(e, cur_deck){
-          console.log("cur_deck:"+JSON.stringify(cur_deck));
-          console.log("cur_deck._id:"+JSON.stringify(cur_deck._id));
           DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
-            console.log("slides:"+slides);
             req.session.deckid = cur_deck._id;
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
@@ -370,26 +370,44 @@ app.post('/edit', function(req, res){
   {
     // if user is not logged-in redirect back to login page
     res.redirect('/login');
+    console.log("//BUG - THIS DOESNT REDIRECT! reason is because this is an app.post a post, not trying to load a page");  
+    //BUG - THIS DOESNT REDIRECT! reason is because this is an app.post a post, not trying to load a page
   }
   else
   {
-
     if (req.session.deckid == null) {
       //create a deck to insert into
     }
     else {
-      if (isImage(req.files.file.path)) {
-        var file_path = req.files.file.path.replace(/.*public/, '');
-        DB.addImage(file_path, req.session.user._id, req.session.deckid, function(err, new_slide){
-          console.log("new_slide: "+new_slide)
-          res.redirect('/edit?deckid=' + req.session.deckid);
-          });
-        }
+      var len = req.files.file.length;
+      if (len == null){
+        if (isImage(req.files.file.path)) {
+            var file_path = req.files.file.path.replace(/.*public/, '');
+            DB.createSlide(file_path, req.session.user._id, req.session.deckid, function(err, new_slide){
+              //success check
+            });
+          }
+          else {
+            res.send('not-image',400);
+          }
+      }
       else {
-        res.send('not-image',400);
+        for (var i = 0; i < len; i++) {
+          if (isImage(req.files.file[i].path)) {
+            var file_path = req.files.file[i].path.replace(/.*public/, '');
+            DB.createSlide(file_path, req.session.user._id, req.session.deckid, function(err, new_slide){
+              //success check
+              });
+          }
+          else {
+            res.send('not-image',400);
+          }
+        }
       }
-      }
+      DB.fixSlideOrder(req.session.deckid); // BUG
+      res.redirect('/edit?deckid=' + req.session.deckid);
     }
+  }
 
     //if file is pptx
     //call insert pptx
@@ -432,7 +450,6 @@ app.get('/createEmptyDeck', function(req, res) {
   }   
   else {
     DB.createEmptyDeck(req.session.user._id, function(e, deck){
-      console.log(deck);
       res.redirect('/edit?deckid=' + deck[0]._id);
     });
   }
