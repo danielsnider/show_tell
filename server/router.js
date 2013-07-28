@@ -20,22 +20,6 @@ app.get('/', function(req, res){
   res.render('index.ejs', { title: 'Show and Tell', keywords: req.session.keywords});
 });
 
-app.get('/present', function(req, res){
-  DB.fixSlideOrder(req.session.deckid); // BUG
-  if (req.query.deckid) {
-    DB.getSlidesByDeckId(req.query.deckid, function(e, slides){
-      console.log("slides:"+slides)
-      res.render('present.jade', {
-        'slides': slides,
-        'deck_id': req.query.deckid
-      });
-    });
-  }
-  else {
-    res.redirect('/login');
-  }
-});
-
 //executes everytime some speech is recognized
 app.get('/checkForKeywordMatch.js?*', function(req, res){
   var file_list = new Array();
@@ -316,6 +300,23 @@ app.post('/login', function(req, res){
 /*                            */
 /*                            */
 
+app.get('/present', function(req, res){
+  // DB.fixSlideOrder(req.session.deckid); // BUG
+  if (req.query.deckid) {
+    DB.getSlidesByDeckId(req.query.deckid, function(e, slides){
+      slides = slides.sort(compare);
+      // console.log("slides:"+slides)
+      res.render('present.jade', {
+        'slides': slides,
+        'deck_id': req.query.deckid
+      });
+    });
+  }
+  else {
+    res.redirect('/login');
+  }
+});
+
 app.get('/edit', function(req, res){
     if (req.session.user == null)
   {
@@ -336,6 +337,8 @@ app.get('/edit', function(req, res){
       else if (req.query.deckid) {
         DB.getDeckById(req.query.deckid, function(e, cur_deck){
           DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
+            slides = slides.sort(compare);
+            //console.log(JSON.stringify(slides));
             req.session.deckid = cur_deck._id;
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
@@ -350,6 +353,8 @@ app.get('/edit', function(req, res){
       else {
         DB.getMostRecentDeck(req.session.user._id, function(e, cur_deck){
           DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
+            slides = slides.sort(compare);
+            //console.log(JSON.stringify(slides));
             req.session.deckid = cur_deck._id;
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
@@ -364,6 +369,14 @@ app.get('/edit', function(req, res){
     });
   }
 });
+
+function compare(a, b){
+  if (a.pos < b.pos)
+    return -1;
+  if (a.pos > b.pos)
+    return 1;
+  return 0;
+}
 
 app.post('/edit', function(req, res){
   if (req.session.user == null)
@@ -383,7 +396,8 @@ app.post('/edit', function(req, res){
       if (len == null){
         if (isImage(req.files.file.path)) {
             var file_path = req.files.file.path.replace(/.*public/, '');
-            DB.createSlide(file_path, req.session.user._id, req.session.deckid, function(err, new_slide){
+            var slide_position = "";
+            DB.createSlide(file_path, req.session.user._id, req.session.deckid, slide_position, function(err, new_slide){
               //success check
             });
           }
@@ -395,7 +409,9 @@ app.post('/edit', function(req, res){
         for (var i = 0; i < len; i++) {
           if (isImage(req.files.file[i].path)) {
             var file_path = req.files.file[i].path.replace(/.*public/, '');
-            DB.createSlide(file_path, req.session.user._id, req.session.deckid, function(err, new_slide){
+            var slide_position = parseInt(req.files.file[i].name.replace(/\D/g, ""));
+            console.log("router pos: "+slide_position);
+            DB.createSlide(file_path, req.session.user._id, req.session.deckid, slide_position, function(err, new_slide){
               //success check
               });
           }
