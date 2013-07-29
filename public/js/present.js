@@ -1,6 +1,19 @@
-console.log("starting");
 var current_slide_id = "";
 var current_slide_keywords = [];
+var hop_back_switch = true; 
+var hop_back_slide = ""; 
+var slide_history = new Stack();
+
+function Stack()
+{
+ this.stac=new Array();
+ this.pop=function(){
+  return this.stac.pop();
+ }
+ this.push=function(item){
+  this.stac.push(item);
+ }
+}
 
 var recognition = new webkitSpeechRecognition();
 recognition.continuous = true;
@@ -80,26 +93,28 @@ function checkKeyword(transcript)
   for (var x = 0; x < slides_arr.length; x++) {
     for (var y = 0; y < slides_arr[x].keywords.length; y++) {
       for (var z = 0; z < transcript.length; z++) {
-        match = slides_arr[x].keywords[y].indexOf(transcript[z]);
+        match = slides_arr[x].keywords[y].toLowerCase().indexOf(transcript[z].toLowerCase());
         if ( match >= 0 && transcript[z] != '') {
           console.log("match found: " + transcript[z]);
+          if (hop_back_switch == true){
+            hop_back_switch = false;
+            hop_back_slide = current_slide_id;
+          }
+          slide_history.push(current_slide_id);
           current_slide_keywords = slides_arr[x].keywords;
           current_slide_id = slides_arr[x]._id;
           $('#slide-area').html('<img src="' + slides_arr[x].resource + '", id="slide")>');
-          return true;
         }
       }
     }
   }
-  //for each slide
-  //if a keyword is found in the transcript
-  //show the slide
 }
 
+//arrow key hot keys
 $(document).keydown(function(e){
   if (current_slide_id == "") { //if no slide shown yet, and right is pressed, show the first slide
     if (e.keyCode == 39) { //right
-      $('#slide-area').html('<img src="' + slides_arr[0].resource + '", id="slide")>');
+      $('#slide-area').html('<img src="' + slides_arr[0].resource + '", id="slide")>');1
       current_slide_id = slides_arr[0]._id;
     }
   }
@@ -109,6 +124,7 @@ $(document).keydown(function(e){
         if (e.keyCode == 37) { //left
           if (slides_arr[i-1]) {
             $('#slide-area').html('<img src="' + slides_arr[i-1].resource + '", id="slide")>');
+            slide_history.push(current_slide_id);
             current_slide_id = slides_arr[i-1]._id;
             return true;
           }
@@ -116,11 +132,59 @@ $(document).keydown(function(e){
         else if (e.keyCode == 39) { //right
           if (slides_arr[i+1]) {
             $('#slide-area').html('<img src="' + slides_arr[i+1].resource + '", id="slide")>');
+            slide_history.push(current_slide_id);
             current_slide_id = slides_arr[i+1]._id;
             return true;
-         }
+          }
         }
       }
     }
+  }
+});
+
+// hotkey for hop-back 
+$(document).keydown(function(e){
+  if (e.keyCode == 13) { // enter key
+    if (hop_back_switch == false) {
+      hop_back_switch = true;
+      current_slide_id = hop_back_slide;
+      for (var i = 0; i < slides_arr.length; i++) {
+        if (slides_arr[i]._id == current_slide_id){
+          $('#slide-area').html('<img src="' + slides_arr[i].resource + '", id="slide")>');
+        }
+      }
+    }
+  }
+});
+
+// hotkey for back one in history
+$(document).keydown(function(e){
+  if (e.keyCode == 74) { // page-up key
+    console.log(JSON.stringify(slide_history));
+    temp = slide_history.pop();
+    if (temp != null) {
+      current_slide_id = temp;
+      for (var i = 0; i < slides_arr.length; i++) {
+        if (slides_arr[i]._id == current_slide_id){
+          $('#slide-area').html('<img src="' + slides_arr[i].resource + '", id="slide")>');
+        }
+      }
+    }
+  }
+});
+
+// hotkey for forward one in history
+$(document).keydown(function(e){
+  if (e.keyCode == 75) { // page-up key
+    alert("PAGE down");
+    // if (hop_back_switch == false) {
+    //   hop_back_switch = true;
+    //   current_slide_id = hop_back_slide;
+    //   for (var i = 0; i < slides_arr.length; i++) {
+    //     if (slides_arr[i]._id == current_slide_id){
+    //       $('#slide-area').html('<img src="' + slides_arr[i].resource + '", id="slide")>');
+    //     }
+    //   }
+    // }
   }
 });

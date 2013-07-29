@@ -10,7 +10,6 @@ html
 
 		// put JADE slides variable into javascript array
 		script
-			console.log("!{slides}");
 			var slides_arr = new Array();
 		each slide, i in slides
 			script
@@ -19,6 +18,7 @@ html
 					resource: "#{slide.resource}",
 					keywords: []
 				};
+				console.log(JSON.stringify(temp_slide));
 				num_keywords = "#{slide.keywords}".split(',').length;
 				for (var x = 0; x < num_keywords; x++) {
 					//console.log("#{slide.keywords}".split(',')[x]);

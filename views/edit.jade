@@ -10,7 +10,7 @@ html
 
     // put JADE slides variable into javascript array
     script.
-      console.log("!{slides}");
+      //console.log("!{slides}");
       var slides_arr = new Array();
     each slide, i in slides
       script.
@@ -31,9 +31,19 @@ html
     if slides[0]
       script.
         var current_slide_id = "#{slides[0]._id}"
+        for (var i = 0; i < slides_arr.length; i++) {
+          if (slides_arr[i]._id == current_slide_id){
+            var current_slide = {
+              _id : slides_arr[i]._id,
+              resource: slides_arr[i].resource,
+              keywords: slides_arr[i].keywords
+            }
+          }
+        }
     else
       script.
         var current_slide_id = "noslides"
+        var current_slide = {};
 
 
   body
@@ -41,6 +51,7 @@ html
     // ------------
     //    Header
     // -----------
+    img#test
     div.container-narrow
     div.navbar.navbar-inverse.navbar-fixed-top
       div.navbar-inner
@@ -49,7 +60,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand(href="#") Show & Tell
+          a.brand(href="#")#company Show & Tell
           div.nav-collapse.collapse
           p.navbar-text.pull-right
             a.btn.btn-medium(href="/home").myBtn Account Settings 
@@ -63,47 +74,52 @@ html
               // 'slides': slides
       
 
-
     div.container-fluid
       div.row-fluid
+
+        // SIDE-BAR
         div.span3
           div.well.sidebar-nav#sidebar
+
+            // SIDE-BAR HEADER
             span#sidebar_top
               div#deckname #{deck_name}
               input(type="text", placeholder="Search").search-query.span7#nav_menue
-
-              // Add to Deck
               a(href="#upload", role="button", data-toggle="modal").btn#add-to-deck
                 i.icon-folder-open
                 |  Add to Deck
 
+            // SLIDES LIST
             div#slides_scrollarea
               each slide, i in slides
                 div(id="slide#{slide._id}")#a_slide
-                  img(src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}', '#{slide._id}')")
+                  img(id="#{slide.resource}", src="#{slide.resource}", onclick="displaySlide('#{slide.resource}','#{slide.keywords}', '#{slide._id}')")
 
 
+          // DECKS LIST
           div.well.sidebar-nav
-            // Add to Deck
             a(href="/createEmptyDeck", role="button", data-toggle="modal").btn#add-to-deck.pull-right
               i.icon-folder-open
               |  Create New Deck 
-
             each deck, i in decks 
               div 
                 a(href="/edit?deckid=#{deck._id}") #{deck.name}
+
+        // CURRENT SLIDE
         div.span9.well
+          div#keywords_area 
+            span#keywords_h1 Keywords: 
+            span
+              textarea(type="text")#keywords_text_area
+                if slides[0]
+                  !{slides[0].keywords}
+                else
+                  "No slides in deck yet..."
           div#current_slide
             if slides[0]
               img(src="#{slides[0].resource}")#current_img
             else
               p No slides in deck yet...
-          div
-            textarea(type="text")#keywords_text_area
-              if slides[0]
-                !{slides[0].keywords}
-              else
-                "No slides in deck yet..."
 
 
                 

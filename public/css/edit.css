@@ -1,5 +1,17 @@
+@font-face {
+  font-family: company;
+  src: url("/fonts/ChaparralPro-SemiboldSubh.otf");
+}
+@font-face {
+  font-family: keywords;
+  src: url("/fonts/HUMASNL_.TTF");
+}
+@font-face {
+  font-family: keywords_h1;
+  src: url("/fonts/HUMASNL_.TTF");
+}
 body {
-  padding-top: 60px;
+  padding-top: 33px;
   padding-bottom: 40px;
 }
 #sidebar {
@@ -7,12 +19,15 @@ body {
   max-height: 100%;
 }
 #slides_scrollarea {
+  width: 110%;
+  position: relative;
+  left: -19px;
   max-height: 500px;
   overflow: scroll;
   border-top: 1px solid #a0a0a0;
 }
 #current_img {
-  max-height: 76%;
+  max-height: 82%;
   border: 1px solid #a0a0a0;
 }
 .myBtn {
@@ -30,13 +45,27 @@ body {
 #add-to-deck {
   margin-bottom: 8px;
   margin-left: 8px;
+  float: right;
 }
-float right,
 #a_slide {
   border: 1px solid #a0a0a0;
 }
 #keywords_text_area {
-  width: 99%;
-  height: 20px;
-  margin-top: 11px;
+  width: 70%;
+  height: 19px;
+  position: relative;
+  font-family: keywords;
+  font-size: 120%;
+}
+#keywords_h1 {
+  font-size: 160%;
+  position: relative;
+  top: -1px;
+}
+#company {
+  font-family: company;
+  font-size: 200%;
+  position: relative;
+  top: 2px;
+  color: #fff;
 }
