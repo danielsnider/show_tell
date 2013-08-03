@@ -339,7 +339,7 @@ app.get('/edit', function(req, res){
           DB.getSlidesByDeckId(cur_deck._id, function(e, slides){
             slides = slides.sort(compare);
             //console.log(JSON.stringify(slides));
-            req.session.deckid = cur_deck._id;
+            req.session.deckid = req.query.deckid;
             res.render('edit.jade', {
               'user': JSON.stringify(req.session.user), // remove this!
               'deck_name': cur_deck.name,

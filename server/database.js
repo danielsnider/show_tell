@@ -244,7 +244,7 @@ var createDefaultDeck = function(user_id, callback)
 			resource : "/img/welcome.png", 
 			keywords : ["welcome", "show and tell", "show", "tell"], 
 			type : "img",
-	 		pos : "1", 
+	 		pos : "1", //PUT AS INT?
 			date_created : date, 
 	 		date_modified : date };
 
@@ -311,7 +311,7 @@ exports.createSlide = function(file_path, user_id, deck_id, pos, callback) {
 			resource : file_path, 
 			keywords : [], 
 			type : "img",
-	 		pos : set_pos.toString(), 
+	 		pos : parseInt(set_pos), 
 			date_created : date, 
 	 		date_modified : date 
 	 	};
