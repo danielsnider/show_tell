@@ -55,8 +55,5 @@ Show visuals just using your voice!
 - mongoDB http://docs.mongodb.org/manual/
 - jade http://jade-lang.com/command-line/
 
-####Login system example code:
+#### Node login system example code:
 https://github.com/braitsch/node-login
-
-### Google Document for comments:
-https://docs.google.com/document/d/1PsP9Rb0oEkOZE9ePCAP10lA9yCaiuAe6IfyX3sp4pjo/edit?usp=sharing
